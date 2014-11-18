@@ -83,6 +83,90 @@ public class ResultSetConverter {
         return json;
           
     }
+    
+    public static StringBuffer convertCsv( ResultSet rs ) 
+        throws SQLException {
+        
+        String column_name     = new String();
+        StringBuffer retval    = new StringBuffer();
+        ResultSetMetaData rsmd = rs.getMetaData();
+        int numColumns         = rsmd.getColumnCount();
+        
+        for( int h=1; h<numColumns+1; h++ ) {
+            column_name = rsmd.getColumnName(h);
+            
+            if( h > 1 ) {
+                retval.append(",");
+            }
+            
+            retval.append(column_name);
+        }
+        retval.append("\n");
+        
+        while( rs.next() ) {
+                        
+            for( int i=1; i<numColumns+1; i++ ) {
+                column_name = rsmd.getColumnName(i);
+                
+                if(StringUtils.equals(column_name, "the_geom") ) {
+                    continue;
+                }                 
+                if(StringUtils.equals(column_name, "geojson") ) {
+                    continue;
+                }
+                if( i > 1 ) {
+                    retval.append(",");
+                }
+                
+                if(rsmd.getColumnType(i)==java.sql.Types.ARRAY){
+                     retval.append( rs.getArray(column_name));
+                }
+                else if(rsmd.getColumnType(i)==java.sql.Types.BIGINT){
+                     retval.append( rs.getInt(column_name));
+                }
+                else if(rsmd.getColumnType(i)==java.sql.Types.BOOLEAN){
+                     retval.append( rs.getBoolean(column_name));
+                }
+                else if(rsmd.getColumnType(i)==java.sql.Types.BLOB){
+                     retval.append( rs.getBlob(column_name));
+                }
+                else if(rsmd.getColumnType(i)==java.sql.Types.DOUBLE){
+                     retval.append( rs.getDouble(column_name)); 
+                }
+                else if(rsmd.getColumnType(i)==java.sql.Types.FLOAT){
+                     retval.append( rs.getFloat(column_name));
+                }
+                else if(rsmd.getColumnType(i)==java.sql.Types.INTEGER){
+                     retval.append( rs.getInt(column_name));
+                }
+                else if(rsmd.getColumnType(i)==java.sql.Types.NVARCHAR){
+                     retval.append( rs.getNString(column_name));
+                }
+                else if(rsmd.getColumnType(i)==java.sql.Types.VARCHAR){
+                     retval.append( rs.getString(column_name));
+                }
+                else if(rsmd.getColumnType(i)==java.sql.Types.TINYINT){
+                     retval.append( rs.getInt(column_name));
+                }
+                else if(rsmd.getColumnType(i)==java.sql.Types.SMALLINT){
+                     retval.append( rs.getInt(column_name));
+                }
+                else if(rsmd.getColumnType(i)==java.sql.Types.DATE){
+                     retval.append( rs.getDate(column_name));
+                }
+                else if(rsmd.getColumnType(i)==java.sql.Types.TIMESTAMP){
+                     retval.append( rs.getTimestamp(column_name));   
+                }
+                else{
+                     retval.append( rs.getObject(column_name));
+                }
+
+            }
+            retval.append("\n");
+        }
+        
+        return retval;
+    }
     public static JSONArray convertGeoJson( ResultSet rs )
             throws SQLException, JSONException {
         
