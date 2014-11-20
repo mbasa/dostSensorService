@@ -60,7 +60,7 @@ public class DBProc {
                         stmnt.close();
                     }
                     if( conn != null ) {
-                        conn.commit();
+                        //conn.commit();
                         conn.close();
                     }
                 }
@@ -107,7 +107,7 @@ public class DBProc {
                         stmnt.close();
                     }
                     if( conn != null ) {
-                        conn.commit();
+                        //conn.commit();
                         conn.close();
                     }
                 }
