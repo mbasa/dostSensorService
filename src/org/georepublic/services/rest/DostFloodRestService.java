@@ -12,6 +12,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.apache.wink.json4j.JSONObject;
 import org.georepublic.db.DBProc;
+import org.georepublic.properties.SQLProperties;
 
 /**
  * 説明：
@@ -36,7 +37,7 @@ public class DostFloodRestService {
         String retval = null;
         JSONObject jo = new JSONObject();
         
-        String sql = "select name,time::text,temp,humi,pres,rain,lon,lat from aws where name = ? and time >=  ? and time <= ?";
+        String sql = SQLProperties.getAwsSql();
         
         try {
             DBProc dbProc = new DBProc();
@@ -60,7 +61,7 @@ public class DostFloodRestService {
             @QueryParam("end")   String end ) {
         
         String retval = null;
-        String sql = "select name,time::text,temp,humi,pres,rain,lon,lat from aws where name = ? and time >=  ? and time <= ?";
+        String sql = SQLProperties.getAwsSql();
         
         try {
             DBProc dbProc   = new DBProc();
@@ -85,7 +86,7 @@ public class DostFloodRestService {
         String retval = null;
         JSONObject jo = new JSONObject();
         
-        String sql = "select name,time::text,value as rainfall,lon,lat from arg where name = ? and time >=  ? and time <= ?";
+        String sql = SQLProperties.getArgSql();
         
         try {
             DBProc dbProc = new DBProc();
@@ -109,7 +110,7 @@ public class DostFloodRestService {
             @QueryParam("end")   String end ) {
         
         String retval = null;
-        String sql = "select name,time::text,value as rainfall,lon,lat from arg where name = ? and time >=  ? and time <= ?";
+        String sql = SQLProperties.getArgSql();
         
         try {
             DBProc dbProc   = new DBProc();
@@ -134,7 +135,7 @@ public class DostFloodRestService {
         String retval = null;
         JSONObject jo = new JSONObject();
         
-        String sql = "select name,time::text,sunrise::text,sunset::text,moonrise::text,moonset::text,value,water_level_change,time_difference,lon,lat from td where name = ? and time >=  ? and time <= ?";
+        String sql = SQLProperties.getTdSql();
         
         try {
             DBProc dbProc = new DBProc();
@@ -158,7 +159,7 @@ public class DostFloodRestService {
             @QueryParam("end")   String end ) {
         
         String retval = null;
-        String sql = "select name,time::text,sunrise::text,sunset::text,moonrise::text,moonset::text,value,water_level_change,time_difference,lon,lat from td where name = ? and time >=  ? and time <= ?";
+        String sql = SQLProperties.getTdSql();
         
         try {
             DBProc dbProc   = new DBProc();
@@ -183,7 +184,7 @@ public class DostFloodRestService {
         String retval = null;
         JSONObject jo = new JSONObject();
         
-        String sql = "select name,time::text,value,water_level_change,time_difference,lon,lat from asg where name = ? and time >=  ? and time <= ?";
+        String sql = SQLProperties.getAsgSql();
         
         try {
             DBProc dbProc = new DBProc();
@@ -207,7 +208,7 @@ public class DostFloodRestService {
             @QueryParam("end")   String end ) {
         
         String retval = null;
-        String sql = "select name,time::text,value,water_level_change,time_difference,lon,lat from asg where name = ? and time >=  ? and time <= ?";
+        String sql = SQLProperties.getAsgSql();
         
         try {
             DBProc dbProc   = new DBProc();

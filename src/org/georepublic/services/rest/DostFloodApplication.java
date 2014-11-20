@@ -13,6 +13,7 @@ import java.util.Set;
 import javax.ws.rs.core.Application;
 
 import org.georepublic.properties.DBProperties;
+import org.georepublic.properties.SQLProperties;
 
 /**
  * 説明： Wink Application(s) Loader
@@ -29,6 +30,7 @@ public class DostFloodApplication extends Application {
         //: Setting the properties
         //::::::::::::::::::::::::::
         DBProperties.setProperties();
+        SQLProperties.setProperties();
         
         return classes;
     }
