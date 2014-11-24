@@ -19,12 +19,12 @@ import org.georepublic.properties.SQLProperties;
  * 説明： Wink Application(s) Loader
  *
  */
-public class DostFloodApplication extends Application {
+public class DostSensorApplication extends Application {
 
     @Override
     public Set<Class<?>> getClasses() {
         Set<Class<?>> classes = new HashSet<Class<?>>();
-        classes.add( DostFloodRestService.class );
+        classes.add( DostSensorRestService.class );
         
         //::::::::::::::::::::::::::
         //: Setting the properties

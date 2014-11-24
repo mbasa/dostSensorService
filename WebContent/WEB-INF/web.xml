@@ -10,20 +10,18 @@
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
   <servlet>
-    <servlet-name>DostFloodRestService</servlet-name>
+    <servlet-name>DostRestService</servlet-name>
     <servlet-class>
         org.apache.wink.server.internal.servlet.RestServlet
     </servlet-class>
     <init-param>
       <param-name>javax.ws.rs.Application</param-name>
-      <param-value>
-            org.georepublic.services.rest.DostFloodApplication
-        </param-value>
+      <param-value>org.georepublic.services.rest.DostSensorApplication</param-value>
     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
-    <servlet-name>DostFloodRestService</servlet-name>
+    <servlet-name>DostRestService</servlet-name>
     <url-pattern>/rest/*</url-pattern>
   </servlet-mapping>
 </web-app>

@@ -24,7 +24,9 @@ public class DBProc {
         this.dbConn = new DBConn();
     }
 
-    public JSONArray sensorJson(String sql,String id,String start,String end) {
+    public JSONArray sensorJson(
+            String sql,String id,String start,String end) {
+        
         JSONArray retval = null;
                 
         Connection conn = dbConn.getConnection();
@@ -70,8 +72,49 @@ public class DBProc {
 
         return retval;
     }
-    
-    public StringBuffer sensorCsv(String sql,String id,String start,String end) {
+
+    public JSONArray sensorListJson(
+            String sql,String id,String start,String end) {
+        
+        JSONArray retval = null;
+                
+        Connection conn = dbConn.getConnection();
+
+        if( this.dbConn != null ) {
+            PreparedStatement stmnt = null;
+            ResultSet rs = null;
+            
+            try {
+                stmnt  = conn.prepareStatement(sql);
+                rs     = stmnt.executeQuery();
+                retval = ResultSetConverter.convertGeoJson(rs);
+            }
+            catch(Exception e) {
+                e.printStackTrace();
+            }
+            finally {
+                try {
+                    if( rs != null ) {
+                        rs.close();
+                    }
+                    if( stmnt != null ) {
+                        stmnt.close();
+                    }
+                    if( conn != null ) {
+                        //conn.commit();
+                        conn.close();
+                    }
+                }
+                catch( Exception ex ) {;}
+            }
+        }
+
+        return retval;
+    }
+
+    public StringBuffer sensorCsv(
+            String sql,String id,String start,String end) {
+        
         StringBuffer retval = new StringBuffer();
         
         Connection conn = dbConn.getConnection();
@@ -92,6 +135,45 @@ public class DBProc {
                     stmnt.setTimestamp(3, getCurrentTimeStamp() );
                 }
 
+                rs     = stmnt.executeQuery();
+                retval = ResultSetConverter.convertCsv(rs);
+            }
+            catch(Exception e) {
+                e.printStackTrace();
+            }
+            finally {
+                try {
+                    if( rs != null ) {
+                        rs.close();
+                    }
+                    if( stmnt != null ) {
+                        stmnt.close();
+                    }
+                    if( conn != null ) {
+                        //conn.commit();
+                        conn.close();
+                    }
+                }
+                catch( Exception ex ) {;}
+            }
+        }
+
+        return retval;
+    }
+
+    public StringBuffer sensorListCsv(
+            String sql,String id,String start,String end) {
+        
+        StringBuffer retval = new StringBuffer();
+        
+        Connection conn = dbConn.getConnection();
+
+        if( this.dbConn != null ) {
+            PreparedStatement stmnt = null;
+            ResultSet rs = null;
+            
+            try {
+                stmnt  = conn.prepareStatement(sql);
                 rs     = stmnt.executeQuery();
                 retval = ResultSetConverter.convertCsv(rs);
             }
