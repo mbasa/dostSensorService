@@ -25,6 +25,11 @@ public class SQLProperties {
     private static String asgListSql = null;
     private static String tdListSql  = null;
 
+    private static String awsAggrSql = null;
+    private static String argAggrSql = null;
+    private static String asgAggrSql = null;
+    private static String tdAggrSql  = null;
+
     public static void setProperties(){
         
         ResourceBundle resb = 
@@ -39,6 +44,11 @@ public class SQLProperties {
         setArgListSql(resb.getString("ARG_LIST_SQL"));
         setAsgListSql(resb.getString("ASG_LIST_SQL"));
         setTdListSql(resb.getString("TD_LIST_SQL"));
+        
+        setAwsAggrSql(resb.getString("AWS_AGGR_SQL"));
+        setArgAggrSql(resb.getString("ARG_AGGR_SQL"));
+        setAsgAggrSql(resb.getString("ASG_AGGR_SQL"));
+        setTdAggrSql(resb.getString("TD_AGGR_SQL"));
     }
     /**
      * @return awsSql を取得する
@@ -135,6 +145,54 @@ public class SQLProperties {
      */
     public static void setTdListSql(String tdListSql) {
         SQLProperties.tdListSql = tdListSql;
+    }
+    /**
+     * @return awsAggrSql を取得する
+     */
+    public static String getAwsAggrSql() {
+        return awsAggrSql;
+    }
+    /**
+     * @param awsAggrSql awsAggrSql を設定する
+     */
+    public static void setAwsAggrSql(String awsAggrSql) {
+        SQLProperties.awsAggrSql = awsAggrSql;
+    }
+    /**
+     * @return argAggrSql を取得する
+     */
+    public static String getArgAggrSql() {
+        return argAggrSql;
+    }
+    /**
+     * @param argAggrSql argAggrSql を設定する
+     */
+    public static void setArgAggrSql(String argAggrSql) {
+        SQLProperties.argAggrSql = argAggrSql;
+    }
+    /**
+     * @return asgAggrSql を取得する
+     */
+    public static String getAsgAggrSql() {
+        return asgAggrSql;
+    }
+    /**
+     * @param asgAggrSql asgAggrSql を設定する
+     */
+    public static void setAsgAggrSql(String asgAggrSql) {
+        SQLProperties.asgAggrSql = asgAggrSql;
+    }
+    /**
+     * @return tdAggrSql を取得する
+     */
+    public static String getTdAggrSql() {
+        return tdAggrSql;
+    }
+    /**
+     * @param tdAggrSql tdAggrSql を設定する
+     */
+    public static void setTdAggrSql(String tdAggrSql) {
+        SQLProperties.tdAggrSql = tdAggrSql;
     }
 
 }
