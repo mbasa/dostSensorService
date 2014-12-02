@@ -43,6 +43,11 @@ public class SQLProperties {
     private static String asgAggrSql = null;
     private static String tdAggrSql  = null;
 
+    private static String awsBboxSql = null;
+    private static String argBboxSql = null;
+    private static String asgBboxSql = null;
+    private static String tdBboxSql  = null;
+
     public static void setProperties(){
         
         ResourceBundle resb = 
@@ -62,6 +67,11 @@ public class SQLProperties {
         setArgAggrSql(resb.getString("ARG_AGGR_SQL"));
         setAsgAggrSql(resb.getString("ASG_AGGR_SQL"));
         setTdAggrSql(resb.getString("TD_AGGR_SQL"));
+        
+        setAwsBboxSql(resb.getString("AWS_BBOX_SQL"));
+        setArgBboxSql(resb.getString("ARG_BBOX_SQL"));
+        setAsgBboxSql(resb.getString("ASG_BBOX_SQL"));
+        setTdBboxSql(resb.getString("TD_BBOX_SQL"));
     }
     /**
      * @return awsSql を取得する
@@ -206,6 +216,54 @@ public class SQLProperties {
      */
     public static void setTdAggrSql(String tdAggrSql) {
         SQLProperties.tdAggrSql = tdAggrSql;
+    }
+    /**
+     * @return awsBboxSql を取得する
+     */
+    public static String getAwsBboxSql() {
+        return awsBboxSql;
+    }
+    /**
+     * @param awsBboxSql awsBboxSql を設定する
+     */
+    public static void setAwsBboxSql(String awsBboxSql) {
+        SQLProperties.awsBboxSql = awsBboxSql;
+    }
+    /**
+     * @return argBboxSql を取得する
+     */
+    public static String getArgBboxSql() {
+        return argBboxSql;
+    }
+    /**
+     * @param argBboxSql argBboxSql を設定する
+     */
+    public static void setArgBboxSql(String argBboxSql) {
+        SQLProperties.argBboxSql = argBboxSql;
+    }
+    /**
+     * @return asgBboxSql を取得する
+     */
+    public static String getAsgBboxSql() {
+        return asgBboxSql;
+    }
+    /**
+     * @param asgBboxSql asgBboxSql を設定する
+     */
+    public static void setAsgBboxSql(String asgBboxSql) {
+        SQLProperties.asgBboxSql = asgBboxSql;
+    }
+    /**
+     * @return tdBboxSql を取得する
+     */
+    public static String getTdBboxSql() {
+        return tdBboxSql;
+    }
+    /**
+     * @param tdBboxSql tdBboxSql を設定する
+     */
+    public static void setTdBboxSql(String tdBboxSql) {
+        SQLProperties.tdBboxSql = tdBboxSql;
     }
 
 }

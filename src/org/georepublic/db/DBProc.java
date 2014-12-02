@@ -125,6 +125,59 @@ public class DBProc {
         return retval;
     }
 
+    public JSONArray sensorBboxJson(
+            String sql,String bbox,String start,String end) {
+        
+        JSONArray retval = null;
+                
+        Connection conn = dbConn.getConnection();
+
+        if( this.dbConn != null ) {
+            PreparedStatement stmnt = null;
+            ResultSet rs = null;
+            
+            try {
+                stmnt  = conn.prepareStatement(sql);
+                
+                String st[] = bbox.split(",");
+                
+                if( st.length != 4 ) {
+                    return retval;
+                }
+                
+                stmnt.setDouble(1, Double.parseDouble(st[0]));
+                stmnt.setDouble(2, Double.parseDouble(st[1]));
+                stmnt.setDouble(3, Double.parseDouble(st[2]));
+                stmnt.setDouble(4, Double.parseDouble(st[3]));
+                stmnt.setTimestamp(5, Timestamp.valueOf(start));
+                stmnt.setTimestamp(6, Timestamp.valueOf(end));
+
+                rs     = stmnt.executeQuery();
+                retval = ResultSetConverter.convertGeoJson(rs);
+            }
+            catch(Exception e) {
+                e.printStackTrace();
+            }
+            finally {
+                try {
+                    if( rs != null ) {
+                        rs.close();
+                    }
+                    if( stmnt != null ) {
+                        stmnt.close();
+                    }
+                    if( conn != null ) {
+                        //conn.commit();
+                        conn.close();
+                    }
+                }
+                catch( Exception ex ) {;}
+            }
+        }
+
+        return retval;
+    }
+
     public StringBuffer sensorCsv(
             String sql,String id,String start,String end) {
         
@@ -187,6 +240,59 @@ public class DBProc {
             
             try {
                 stmnt  = conn.prepareStatement(sql);
+                rs     = stmnt.executeQuery();
+                retval = ResultSetConverter.convertCsv(rs);
+            }
+            catch(Exception e) {
+                e.printStackTrace();
+            }
+            finally {
+                try {
+                    if( rs != null ) {
+                        rs.close();
+                    }
+                    if( stmnt != null ) {
+                        stmnt.close();
+                    }
+                    if( conn != null ) {
+                        //conn.commit();
+                        conn.close();
+                    }
+                }
+                catch( Exception ex ) {;}
+            }
+        }
+
+        return retval;
+    }
+
+    public StringBuffer sensorBboxCsv(
+            String sql,String bbox,String start,String end) {
+        
+        StringBuffer retval = new StringBuffer();
+        
+        Connection conn = dbConn.getConnection();
+
+        if( this.dbConn != null ) {
+            PreparedStatement stmnt = null;
+            ResultSet rs = null;
+            
+            try {
+                stmnt  = conn.prepareStatement(sql);
+                
+                String st[] = bbox.split(",");
+                
+                if( st.length != 4 ) {
+                    return retval;
+                }
+                
+                stmnt.setDouble(1, Double.parseDouble(st[0]));
+                stmnt.setDouble(2, Double.parseDouble(st[1]));
+                stmnt.setDouble(3, Double.parseDouble(st[2]));
+                stmnt.setDouble(4, Double.parseDouble(st[3]));
+                stmnt.setTimestamp(5, Timestamp.valueOf(start));
+                stmnt.setTimestamp(6, Timestamp.valueOf(end));
+                
                 rs     = stmnt.executeQuery();
                 retval = ResultSetConverter.convertCsv(rs);
             }

@@ -48,33 +48,39 @@ public class DostSensorRestService {
             @QueryParam("id")    String id,
             @QueryParam("start") String start,
             @QueryParam("end")   String end,
-            @QueryParam("type")  String type ) {
+            @QueryParam("type")  String type,
+            @QueryParam("bbox")  String bbox ) {
         
         String retval  = null;
         String sql     = new String();
         String sqlAggr = new String();
         String sqlList = new String();
+        String sqlBbox = new String();
         JSONObject jo  = new JSONObject();
                         
         if( StringUtils.equalsIgnoreCase(sensor, "weatherstation")) {
             sql     = SQLProperties.getAwsSql();
             sqlAggr = SQLProperties.getAwsAggrSql();
             sqlList = SQLProperties.getAwsListSql();
+            sqlBbox = SQLProperties.getAwsBboxSql();
         }
         else if( StringUtils.equalsIgnoreCase(sensor, "rainfall")) {
             sql     = SQLProperties.getArgSql();
             sqlAggr = SQLProperties.getArgAggrSql();
             sqlList = SQLProperties.getArgListSql();
+            sqlBbox = SQLProperties.getArgBboxSql();
         }
         else if( StringUtils.equalsIgnoreCase(sensor, "tideguage")) {
             sql     = SQLProperties.getTdSql();
             sqlAggr = SQLProperties.getTdAggrSql();
             sqlList = SQLProperties.getTdListSql();
+            sqlBbox = SQLProperties.getTdBboxSql();
         }
         else if( StringUtils.equalsIgnoreCase(sensor, "streamguage")) {
             sql     = SQLProperties.getAsgSql();
             sqlAggr = SQLProperties.getAsgAggrSql();
             sqlList = SQLProperties.getAsgListSql();
+            sqlBbox = SQLProperties.getAsgBboxSql();
         }
         else {           
             return this.emptyReq();
@@ -83,7 +89,10 @@ public class DostSensorRestService {
         try {
             DBProc dbProc = new DBProc();
             
-            if( id != null && start != null ) {
+            if( bbox != null && start != null && end != null ) {
+                jo.put( "Features", dbProc.sensorBboxJson(sqlBbox,bbox,start,end) );
+            }
+            else if( id != null && start != null ) {
                 if( StringUtils.equalsIgnoreCase(type, "aggregate") ) {
                     jo.put( "Features", dbProc.sensorJson(sqlAggr,id,start,end) );
                 }
@@ -111,32 +120,38 @@ public class DostSensorRestService {
             @QueryParam("id")    String id,
             @QueryParam("start") String start,
             @QueryParam("end")   String end,
-            @QueryParam("type")  String type ) {
+            @QueryParam("type")  String type,
+            @QueryParam("bbox")  String bbox) {
         
         String retval  = null;
         String sql     = new String(); 
         String sqlAggr = new String();
         String sqlList = new String();
+        String sqlBbox = new String();
         
         if( StringUtils.equalsIgnoreCase(sensor, "weatherstation")) {
             sql     = SQLProperties.getAwsSql();
             sqlAggr = SQLProperties.getAwsAggrSql();
             sqlList = SQLProperties.getAwsListSql();
+            sqlBbox = SQLProperties.getAwsBboxSql();
         }
         else if( StringUtils.equalsIgnoreCase(sensor, "rainfall")) {
             sql     = SQLProperties.getArgSql();
             sqlAggr = SQLProperties.getArgAggrSql();
             sqlList = SQLProperties.getArgListSql();
+            sqlBbox = SQLProperties.getArgBboxSql();
         }
         else if( StringUtils.equalsIgnoreCase(sensor, "tideguage")) {
             sql     = SQLProperties.getTdSql();
             sqlAggr = SQLProperties.getTdAggrSql();
             sqlList = SQLProperties.getTdListSql();
+            sqlBbox = SQLProperties.getTdBboxSql();
         }
         else if( StringUtils.equalsIgnoreCase(sensor, "streamguage")) {
             sql     = SQLProperties.getAsgSql();
             sqlAggr = SQLProperties.getAsgAggrSql();
             sqlList = SQLProperties.getAsgListSql();
+            sqlBbox = SQLProperties.getAsgBboxSql();
         }
         else {           
             return this.emptyReq();
@@ -146,7 +161,10 @@ public class DostSensorRestService {
             DBProc dbProc   = new DBProc();
             StringBuffer sb = new StringBuffer();
             
-            if( id != null && start != null  ) {
+            if( bbox != null && start != null && end != null ) {
+                sb = dbProc.sensorBboxCsv(sqlBbox, bbox, start, end);
+            }
+            else if( id != null && start != null  ) {
                 if( StringUtils.equalsIgnoreCase(type, "aggregate") ) {
                     sb = dbProc.sensorCsv(sqlAggr,id, start, end);
                 }
